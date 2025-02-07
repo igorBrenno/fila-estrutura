@@ -1,42 +1,38 @@
-class Fila {
-    constructor() {
+class Queue {
+    constructor(){
         this.items = []
     }
-
-    enqueue(elemento) {
-        this.items.push(elemento)
+  
+    enqueue(element){
+        this.items.push(element)
     }
-
-    dequeue() {
-        if (this.isEmpty()) {
-            return "Fila Vazia"
+   
+    dequeue(){
+        if (this.isEmpty()){
+            return "A fila está vazia"
         }
         return this.items.shift()
     }
-    size() {
+    
+    size(){
         return this.items.length
     }
-    isEmpty() {
+    
+    isEmpty(){
         return this.items.length === 0
     }
-    front() {
-        if (this.isEmpty()) {
-            return "Fila Vazia"
-        } else {
-            return this.items[0]
-        }
+    
+    front(){
+        return this.isEmpty()? "A fila está vazia": this.items[0]
     }
-    rear() {
-        if (this.isEmpty()) {
-            return "Fila Vazia"
-        } else {
-            return this.items[this.size()-1]
-        }
+
+    rear(){
+        return this.isEmpty()? "A fila está vazia": this.items[size()-1]
     }
 
     clear() {
-        this.items = [];
+        this.items = []; 
     }
 }
 
-export {Fila}
+export {Queue}

@@ -26,6 +26,8 @@
     </div>
 
     <script>
+      const fala = window.speechSynthesis;
+
       function dequeueButton() {
         const url = "http://localhost:8000/dequeue";
 
@@ -38,6 +40,19 @@
             const element = json.element;
 
             resposta.innerHTML = element;
+
+            let texto = element != "A fila está vazia"? `${element}, comparecer no balcão`: element;
+            let voz = fala.getVoices();
+
+            if (voz.length !== 0) {
+              let m = new SpeechSynthesisUtterance();
+              m.voice = voz[2];
+              m.rate = 1;
+              m.pitch = 1;
+              m.text = texto;
+              m.lang = "pt-br";
+              fala.speek(m)
+            }
           })
           .catch((err) => {
             alert("Erro");

@@ -1,105 +1,127 @@
-import express from "express";
+import express from 'express';
+import cors from 'cors';
 
-import cors from "cors";
-
-const app = express()
-
-let array = []
+const app = express();
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.join());
+app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("OII")
+let fila = []
+let users = []
+
+app.get('/', (req, res) => {
+  res.send("Hello")
+});
+
+app.get('/queue', (req, res) => {
+  res.send({
+    'items': fila
+  })
 })
 
-app.get("/size", function(req, res) {
-    const size = array.length
-    res.send({
-        "Size": size,
-    })
-})
+app.post("/register", (req, res) => {
+  const { name, email, password } = req.body;
+  
+  if (!name || !email || !password) {
+      return res.status(401).json({ message: "Você deve preencher todos os campos!" });
+  }
 
-app.get("/front", function (req, res) {
-    const front = null
-    
-    if (array.length === 0) {
-        front = "Fila Vazia"
-    } else {
-        front = array[0]
-    } 
-    
-    res.send({
-        "Front": front,
-    })
-})
+  console.log("Dados recebidos:", { name, email, password });
 
-app.get("/rear", function(req, res) {
-    const rear = null;
-    if (array.length === 0) {
-        rear = "Fila Vazia"
-    } else {
-        rear = array[array.length-1]
-    } 
+  const newUser = { name, email, password };
+  const email_existing = false;
+  for (const user of users) {
+    if (newUser.email == user.email) {
+      email_existing = true;
+    }
+  }
+  if (!email_existing) {
+    users.push(newUser);
+    res.status(201).json({ message: "Usuário registrado com sucesso!" });
+  } else {
+    res.status(401).json({ message: "Este email já foi registrado, tente outro!" });
+  }
+  
+});
+
+app.get("/users", (req, res) => {
+  let user = users.length === 0? "Não a usúarios cadastrados": users
     res.send({
-        "Rear": rear,
+        'users': user,
     })
 });
 
-app.get("/isEmpty", function(req, res) {
-    const isEmpty = null
-    if (array.length === 0) {
-        isEmpty = true
-    } else {
-        isEmpty = false
+app.post("/login", (req, res) => {
+
+  const { email, password } = req.body;
+
+  for (const user of users) {
+    if (email == user.email  && password == user.password) {
+      res.status(200).json({ message: "Usuário logado com sucesso!" });
     }
+  }
+  res.status(401).json({ message: "Senha ou Email estão incorreto!" });
+
+
+})
+
+app.post('/enqueue', (req, res) => {
+    const element = req.body.element;
+    fila.push(element)
+
     res.send({
-        "isEmpty": isEmpty,
-    })
-});
-
-
-
-app.get("/dequeue", function(req, res) {
-    const elemento = null;
-    if (array.length !== 0) {
-        elemento = array.shift()
-    } else {
-        elemento = "Fila Vazia"
-    }
-    res.send({
-        "elemento": elemento,
+      'element': element,
+      'pos': fila.length,
     })
 })
 
-app.get("/queue", function(req, res) {
+app.get('/enqueue/:element', function(req, res) {
+    const element = req.params.element
+    fila.push(element)
     res.send({
-        "items": array
-    })
+        'element': element,
+        'pos': fila.length,
+      })
 })
 
-app.get("/enqueue", function(req, res) {
-    const elemento = req.body.elemento;
-    array.push(elemento)
-
+app.get('/dequeue', function(req, res) {
+    const element = fila.length !== 0? fila.shift(): "A fila está vazia"
     res.send({
-        "elemento": elemento,
-        "pos": array.length,
-    })
+        'element': element,
+      })
 })
 
-app.get("/enqueue/:elemento", function(req, res) {
-    const elemento = req.params.elemento
-    array.push(elemento)
+app.get('/size', function(req, res) {
+    const size = lista.lenght
     res.send({
-        "elemento": elemento,
-        "pos": array.length,
-    })
+        'size': size,
+      })
 })
 
-app.listen(8000, ()=> {
-    console.log(`Servidor rodando na porta 8000`); 
+app.get('/front', function(req, res) {
+    const front = fila.length === 0? "A fila está vazia": fila[0]
+    res.send({
+        'front': front,
+      })
+})
+
+app.get('/rear', function(req, res) {
+    const rear = fila.length === 0? "A fila está vazia": fila[fila.length-1]
+    res.send({
+        'rear': rear,
+      })
+})
+
+app.get('/isEmpty', function(req, res) {
+    const isEmpty = fila.length === 0? true: false
+    res.send({
+        'isEmpty': isEmpty,
+      })
+})
+
+app.listen(8000, () => {
+  console.log(`Server is running on port 8000 `);
 });
 
 export default app;

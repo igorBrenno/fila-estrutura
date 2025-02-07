@@ -5,14 +5,14 @@ class Node {
     }
 }
 
-class FilaLinked {
-    constructor () {
+class LinkedQueue {
+    constructor() {
         this.__front = null
         this.__tail = null
         this.__size = 0
     }
 
-    size() {
+    size(){
         return this.__size
     }
 
@@ -27,8 +27,9 @@ class FilaLinked {
         }
 
         this.__size++
-    }
 
+    }
+    
     dequeue() {
         if (this.__size === 0) {
             return "Fila vazia"
@@ -75,7 +76,7 @@ class FilaLinked {
         }
         return current;
     }
-
+    
 }
 
-export {FilaLinked}
+export {LinkedQueue}
