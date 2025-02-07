@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Arrays - Lab 01</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+	<div id="main" class="h-screen flex items-center justify-center">
+		<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-6xl">
+			<h1 class="text-2xl font-extrabold text-center text-gray-800 mb-8">Lab 01 - Manipulando Arrays</h1>
+
+			<div class="mb-6">
+				<label for="elemento" class="block text-lg font-medium text-gray-700 mb-2">Digite um valor:</label>
+				<input type="text" id="elemento" name="elemento"
+					class="w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+					placeholder="Escolha um valor">
+
+
+			</div>
+
+			<p class="text-lg text-gray-700 mb-2">Selecione uma operação para realizar sobre o array:</p>
+			<div class="mb-6  max-w-4xl mx-auto">
+				<div class="grid grid-cols-2 gap-4">
+					<input type="button" id="enqueue" value="enqueue"
+						class="bg-blue-500 :bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+					<input type="button" id="dequeue" value="dequeue"
+						class="bg-blue-500 :bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+					<input type="button" id="front" value="front"
+						class="bg-blue-500 :bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+					<input type="button" id="rear" value="rear"
+						class="bg-blue-500 :bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+					<input type="button" id="isEmpty" value=" isEmpty"
+						class="bg-blue-500 :bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+					<input type="button" id="size" value=" size"
+						class="bg-blue-500 :bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+				</div>
+			</div>
+
+			<p class="text-lg text-gray-700">Variável: <strong>meuArray</strong></p>
+			<div id="meuArray"
+				class="bg-sky-700 text-white p-4 rounded-lg h-20 overflow-auto mt-4 flex items-center justify-start">
+
+			</div>
+
+
+
+
+			<p class="text-lg text-gray-700 mt-5">Output:</strong></p>
+			<div id="output"
+				class="bg-sky-700 text-white p-4 rounded-lg h-20 overflow-auto mt-4 flex items-center justify-start">
+
+			</div>
+		</div>
+	</div>
+
+	<script src="script.js" type="module"></script>
+</body>
+
+</html>

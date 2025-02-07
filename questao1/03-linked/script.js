@@ -1,4 +1,4 @@
-import { enqueue, dequeue, size, isEmpty, front, rear, items } from "./queue.js"
+import { Queue } from "./linked.js"
 
 const enqueue_button = document.getElementById("enqueue")
 const dequeue_button = document.getElementById("dequeue")
@@ -9,7 +9,7 @@ const size_button = document.getElementById("size")
 
 const output = document.getElementById("output")
 
-
+const queue = new Queue()
 enqueue_button.addEventListener("click", enqueue_fn)
 dequeue_button.addEventListener("click", dequeue_fn)
 front_button.addEventListener("click", front_fn)
@@ -23,8 +23,8 @@ exibirArray()
 function exibirArray(){
     const divMeuArray = document.getElementById("meuArray")
     divMeuArray.innerHTML = ""
-    for (let i = 0; i < items.length; i++){
-      divMeuArray.appendChild(criarDiv(items[i]))
+    for (let i = 0; i < queue._size; i++){
+      divMeuArray.appendChild(criarDiv(queue.front.value))
     }
   }
 
@@ -49,22 +49,22 @@ function exibirArray(){
 
 function enqueue_fn() {
     let valor = document.getElementById("elemento").value;
-    enqueue(valor)
+    queue.enqueue(valor)
     exibirArray()
 }
 function dequeue_fn() {
-    dequeue()
+    queue.dequeue()
     exibirArray()
 }
 function front_fn() {
-    output.append(criarDiv(front()))
+    output.append(criarDiv(queue.front.value))
 }
 function rear_fn() {
-    output.append(criarDiv(rear()))
+    output.append(criarDiv(queue.rear.value))
 }
 function isEmpty_fn() {
-  output.append(criarDiv(isEmpty()))
+  output.append(criarDiv(queue.isEmpty()))
 }
 function size_fn() {
-  output.append(criarDiv(size()))
+  output.append(criarDiv(queue.size()))
 }
