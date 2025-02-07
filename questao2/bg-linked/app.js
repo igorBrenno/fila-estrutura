@@ -15,52 +15,6 @@ app.get('/', (req, res) => {
   res.send("Hello")
 });
 
-app.post("/register", (req, res) => {
-  const { name, email, password } = req.body;
-  
-  if (!name || !email || !password) {
-      return res.status(401).json({ message: "Você deve preencher todos os campos!" });
-  }
-
-  console.log("Dados recebidos:", { name, email, password });
-
-  const newUser = { name, email, password };
-  const email_existing = false;
-  for (const user of users) {
-    if (newUser.email == user.email) {
-      email_existing = true;
-    }
-  }
-  if (!email_existing) {
-    users.push(newUser);
-    res.status(201).json({ message: "Usuário registrado com sucesso!" });
-  } else {
-    res.status(401).json({ message: "Este email já foi registrado, tente outro!" });
-  }
-  
-});
-
-app.get("/users", (req, res) => {
-  let user = users.length === 0? "Não a usúarios cadastrados": users
-    res.send({
-        'users': user,
-    })
-});
-
-app.post("/login", (req, res) => {
-
-  const { email, password } = req.body;
-
-  for (const user of users) {
-    if (email == user.email  && password == user.password) {
-      res.status(200).json({ message: "Usuário logado com sucesso!" });
-    }
-  }
-  res.status(401).json({ message: "Senha ou Email estão incorreto!" });
-
-
-})
-
 app.get('/queue', (req, res) => {
   res.send({
     'items': lQueue
