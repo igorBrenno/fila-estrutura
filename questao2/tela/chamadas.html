@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chamadas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="container mx-auto px-8 py-28 sm:px-12">
     <h1
@@ -27,10 +28,9 @@
     </div>
 
     <script>
-        setTimeout( ()=> frontButton(), 1000)
         
       function frontButton() {
-        const url = "http://localhost:8000/front";
+        const url = "https://potential-spork-74xgwx9p4p42rrrx-8000.app.github.dev/front";
 
         fetch(url)
           .then(async (response) => {
@@ -46,7 +46,8 @@
             alert("Erro");
           });
       }
+      setInterval(() => frontButton(), 1000)
+      frontButton()
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
   </body>
 </html>

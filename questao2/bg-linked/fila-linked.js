@@ -5,14 +5,14 @@ class Node {
     }
 }
 
-class LinkedQueue {
+export class LinkedQueue {
     constructor() {
         this.__front = null
         this.__tail = null
         this.__size = 0
     }
 
-    size(){
+    size() {
         return this.__size
     }
 
@@ -29,7 +29,7 @@ class LinkedQueue {
         this.__size++
 
     }
-    
+
     dequeue() {
         if (this.__size === 0) {
             return "Fila vazia"
@@ -68,15 +68,14 @@ class LinkedQueue {
     }
 
     toArray() {
-        let array = []
-        current = this.__front
-        while (current !== null) {
-            array.push(current.value)    
-            current = current.next
+        const result = []
+        let temp = this.__front
+        while (temp != null) {
+            result.push(temp.value)
+            temp = temp.next
         }
-        return current;
+        return result
     }
-    
+
 }
 
-export {LinkedQueue}

@@ -1,15 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import {Queue} from "./class-fila.js"
+import { Queue } from './class-fila.js';
 
 const app = express();
+
 const queue = new Queue()
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-let users = []
+queue.enqueue("Igor")
+queue.enqueue("Brenno")
 
 app.get('/', (req, res) => {
   res.send("Hello")
@@ -24,19 +26,26 @@ app.get('/queue', (req, res) => {
 app.post('/enqueue', (req, res) => {
     const element = req.body.element;
     queue.enqueue(element)
-
     res.send({
       'element': element,
-      'pos': queue.size(),
+      'pos': size(),
     })
 })
+
+app.get('/dequeue', function(req, res) {
+  const element = queue.dequeue()
+  res.send({
+      'element': element,
+    })
+})
+
 
 app.get('/enqueue/:element', function(req, res) {
     const element = req.params.element
     queue.enqueue(element)
     res.send({
         'element': element,
-        'pos': queue.size(),
+        'pos': size(),
       })
 })
 
@@ -48,32 +57,33 @@ app.get('/dequeue', function(req, res) {
 })
 
 app.get('/size', function(req, res) {
-    const size = queue.size()
-    res.send({
-        'size': size,
-      })
+  const tamanho = queue.size()
+  res.send({
+      'size': tamanho,
+    })
 })
 
 app.get('/front', function(req, res) {
-    const front = queue.front()
-    res.send({
-        'front': front,
-      })
+  const primeiro = queue.front()
+  res.send({
+      'front': primeiro || "Está vazio",
+    })
 })
 
 app.get('/rear', function(req, res) {
-    const rear = queue.rear()
-    res.send({
-        'rear': rear,
-      })
+  const ultimo = queue.rear()
+  res.send({
+      'rear': ultimo,
+    })
 })
 
 app.get('/isEmpty', function(req, res) {
-    const isEmpty = queue.isEmpty()
-    res.send({
-        'isEmpty': isEmpty,
-      })
+  const vazio = queue.isEmpty()
+  res.send({
+      'isEmpty': vazio || "Está vazio",
+    })
 })
+
 
 app.listen(8000, () => {
   console.log(`Server is running on port 8000 `);

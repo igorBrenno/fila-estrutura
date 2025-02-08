@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { dequeue, enqueue, front, isEmpty, items, rear, size } from './queue.js';
 
 const app = express();
 
@@ -7,8 +8,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-let fila = []
-let users = []
+enqueue("Igor")
+enqueue("Brenno")
 
 app.get('/', (req, res) => {
   res.send("Hello")
@@ -16,26 +17,33 @@ app.get('/', (req, res) => {
 
 app.get('/queue', (req, res) => {
   res.send({
-    'items': fila
+    'items': items
   })
 })
 
 app.post('/enqueue', (req, res) => {
     const element = req.body.element;
-    fila.push(element)
-
+    enqueue(element)
     res.send({
       'element': element,
-      'pos': fila.length,
+      'pos': size(),
     })
 })
 
+app.get('/dequeue', function(req, res) {
+  const element = dequeue()
+  res.send({
+      'element': element,
+    })
+})
+
+
 app.get('/enqueue/:element', function(req, res) {
     const element = req.params.element
-    fila.push(element)
+    enqueue(element)
     res.send({
         'element': element,
-        'pos': fila.length,
+        'pos': size(),
       })
 })
 
@@ -47,32 +55,33 @@ app.get('/dequeue', function(req, res) {
 })
 
 app.get('/size', function(req, res) {
-    const size = lista.lenght
-    res.send({
-        'size': size,
-      })
+  const tamanho = size()
+  res.send({
+      'size': tamanho,
+    })
 })
 
 app.get('/front', function(req, res) {
-    const front = fila.length === 0? "A fila está vazia": fila[0]
-    res.send({
-        'front': front,
-      })
+  const primeiro = front()
+  res.send({
+      'front': primeiro || "Está vazio",
+    })
 })
 
 app.get('/rear', function(req, res) {
-    const rear = fila.length === 0? "A fila está vazia": fila[fila.length-1]
-    res.send({
-        'rear': rear,
-      })
+  const ultimo = rear()
+  res.send({
+      'rear': ultimo,
+    })
 })
 
 app.get('/isEmpty', function(req, res) {
-    const isEmpty = fila.length === 0? true: false
-    res.send({
-        'isEmpty': isEmpty,
-      })
+  const vazio = isEmpty()
+  res.send({
+      'isEmpty': vazio || "Está vazio",
+    })
 })
+
 
 app.listen(8000, () => {
   console.log(`Server is running on port 8000 `);
